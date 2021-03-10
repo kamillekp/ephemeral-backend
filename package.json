@@ -5,10 +5,11 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
     "serve": "nodemon ./src/index.js"
   },
   "keywords": [],
-  "author": "Kamille",
+  "author": "Kamille Konarzewski",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
