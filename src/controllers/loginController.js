@@ -1,7 +1,7 @@
 const connection = require('../dataBase/dbConnection');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const SECRET = "ellimak";
 
 module.exports = {
     //LOGAR USER
@@ -25,7 +25,7 @@ module.exports = {
                     console.log(user.idUser)
 
                     //INCIANDO TOKEN
-                    const token = jwt.sign({idUser: user.idUser}, SECRET);
+                    const token = jwt.sign({idUser: user.idUser}, process.env.SECRET);
                     return res.status(200).json({token, auth: true, atividade: user.atividade});
                 } 
                 else {
