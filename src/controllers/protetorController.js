@@ -116,7 +116,7 @@ module.exports = {
             const tokenDecode = jwt.decode(token);
             const idUser = tokenDecode.idUser;
             
-            await connection('user').where({idUser:idUser}).del();
+            await connection.delete().from('user').where({idUser:idUser});
             return res.status(200).json('Delete feito');
         }
         catch (error) {

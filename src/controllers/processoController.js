@@ -27,7 +27,7 @@ module.exports = {
 
             if(userLT.nomeUser !== "" && userLT.atividade === 'Ativo') {
                 await connection('processo').insert({
-                    idProcesso: idProcess, idUser: idUser, userName: userProtetor.nomeUser, userNameLT: userLT.nomeUser, dataAcordo:'', status: 'Em andamento', documento:'', 
+                    idProcesso: idProcess, userName: userProtetor.nomeUser, userNameLT: userLT.nomeUser, dataAcordo:'', status: 'Em andamento', documento:'', 
                 });
             }
             return res.status(201).json('Comentário realizado.');

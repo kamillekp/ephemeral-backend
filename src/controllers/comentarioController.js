@@ -54,7 +54,7 @@ module.exports = {
                 const idComent = crypto.randomBytes(8).toString('HEX');
 
                 await connection('comentario').insert({
-                    idComentario: idComent, idRemetente: idUser, userNameRemetente:nomeUserRemetente.nomeUser, userNameDestinatario: nomeUserDestinatario.nomeUser, texto, dataComent: dataComentario
+                    idComentario: idComent, userNameRemetente:nomeUserRemetente.nomeUser, userNameDestinatario: nomeUserDestinatario.nomeUser, texto, dataComent: dataComentario
                 });
                 return res.status(201).json('Comentário realizado.');
             }
