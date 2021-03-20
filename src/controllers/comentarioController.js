@@ -6,6 +6,7 @@ module.exports = {
     //SALVAR COMENTARIO 
     async store (req, res) {
         try {
+            
             //PEGANDO DATA ATUAL
             var data = new Date();
             var dia = data.getDate();
@@ -29,12 +30,10 @@ module.exports = {
                 dataComentario = dia + '/' + mes + '/' + ano
             }
 
-            console.log(dataComentario);
-
             //REQUISIÇÕES
             const {texto} = req.body;
             const {id, idLarTemp} = req.params;
-            console.log(texto)
+            console.log('Texto: '+ texto)
 
             var a = JSON.stringify(id);
             const token = a.substring(1, a.length-1);
@@ -43,11 +42,9 @@ module.exports = {
 
             //SELECIONAR USERNAMEREMETENTE
             const [nomeUserRemetente] = await connection.select('nomeUser').from('user').where({idUser: idUser});
-            console.log('remetente: ' + nomeUserRemetente.nomeUser);
 
             //CONFIRMAR SE DESTINATARIO EXISTE
             const [nomeUserDestinatario] = await connection.select('nomeUser').from('user').where({idUser: idLarTemp});
-            console.log('destinatário: ' + nomeUserDestinatario.nomeUser);
 
             if(nomeUserDestinatario.nomeUser !== ""){
                 //CRIANDO ID DO COMENTARIO
@@ -79,10 +76,11 @@ module.exports = {
      async indexDestinLT (req, res) {
         try{
             //REQUISIÇÃO
-            console.log('oii')
+            console.log('entrou indexDestinLT')
             const {page = 1} = req.query;
             const {id} = req.params;
-
+            console.log(id)
+        
             //VERIFICANDO SE NOMEUSER EXISTE
             const [nomeUser] = await connection.select('nomeUser').from('user').where({idUser:id});
 
