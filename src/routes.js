@@ -10,6 +10,7 @@ const comentarioController = require('./controllers/comentarioController');
 const loginController = require('./controllers/loginController');
 const pesquisaLTController = require('./controllers/pesquisaLTController');
 const pesquisarPerfilController = require('./controllers/pesquisaPerfilController');
+const reclameController = require('./controllers/reclameController');
 
 //ROTA RAIZ
 routes.get('/', (req, res) => {
@@ -63,5 +64,8 @@ routes.get('/coment/all', comentarioController.indexAll);
 routes.get('/coment/search/destinatario/:id', comentarioController.indexDestin); 
 routes.get('/coment/search/destinatariolt/:id', comentarioController.indexDestinLT); 
 routes.delete('/coment/delete/:idComentario', comentarioController.destroy); 
+
+//RECLAMAÇÕES
+routes.post('/reclameAqui', reclameController.store);
 
 module.exports = routes;
