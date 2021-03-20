@@ -67,5 +67,6 @@ routes.delete('/coment/delete/:idComentario', comentarioController.destroy);
 
 //RECLAMAÇÕES
 routes.post('/reclameAqui', reclameController.store);
+routes.get('/reclameAqui/pesquisa', reclameController.indexAll);
 
 module.exports = routes;
