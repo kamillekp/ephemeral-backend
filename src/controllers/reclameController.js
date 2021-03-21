@@ -6,7 +6,7 @@ module.exports = {
             const {texto, email} = req.body;
 
             await connection('reclamacoes').insert({email, texto});
-            return res.status(201).send();
+            return res.status(201).json('Reclamação registrada.');
         }
         catch(err) {
             return res.status(400).send(err);
