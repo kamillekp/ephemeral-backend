@@ -1,6 +1,6 @@
 const connection = require('../dataBase/dbConnection')
 const bcrypt = require('bcrypt');
-const crypto = require ('crypto')
+const crypto = require ('crypto');
 const jwt = require('jsonwebtoken');
 const SECRET = "ellimak";
 

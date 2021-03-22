@@ -11,6 +11,7 @@ const loginController = require('./controllers/loginController');
 const pesquisaLTController = require('./controllers/pesquisaLTController');
 const pesquisarPerfilController = require('./controllers/pesquisaPerfilController');
 const reclameController = require('./controllers/reclameController');
+const passwordController = require('./controllers/passwordController');
 
 //ROTA RAIZ
 routes.get('/', (req, res) => {
@@ -68,5 +69,8 @@ routes.delete('/coment/delete/:idComentario', comentarioController.destroy);
 //RECLAMAÇÕES
 routes.post('/reclameAqui', reclameController.store);
 routes.get('/reclameAqui/pesquisa', reclameController.indexAll);
+
+//ENVIO DO EMAIL
+routes.put('/user/alterarSenha', passwordController.updateSenha);
 
 module.exports = routes;
