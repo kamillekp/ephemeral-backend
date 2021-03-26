@@ -32,7 +32,7 @@ routes.post('/user/imagens/:id', multer(multerConfig).single('file'), async (req
     var a = JSON.stringify(id);
     const token = a.substring(1, a.length-1);
 
-    const url = `${process.env.APP_URL}files/${req.file.filename}`;
+    const url = `https://ephemeral-back.herokuapp.com/files/${req.file.filename}`;
     console.log(url);
     console.log(token.length)
     if(token.length > 11) {
