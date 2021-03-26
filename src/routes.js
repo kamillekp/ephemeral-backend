@@ -1,5 +1,13 @@
+require('dotenv');
 const express = require('express');
 const routes = express.Router();
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const multerConfig = require('./config/multer');
+const connection = require('./dataBase/dbConnection');
+const fs = require('fs');
+const path = require('path');
+const {promisify} = require('util')
 
 //CONTROLLERS
 const protetorController = require('./controllers/protetorController');
@@ -16,6 +24,75 @@ const passwordController = require('./controllers/passwordController');
 //ROTA RAIZ
 routes.get('/', (req, res) => {
     return res.json('TELA INICIAL');
+});
+
+//CRIANDO IMAGEM
+routes.post('/user/imagens/:id', multer(multerConfig).single('file'), async (req, res) => {
+    const {id} = req.params;
+    var a = JSON.stringify(id);
+    const token = a.substring(1, a.length-1);
+
+    const url = `${process.env.APP_URL}files/${req.file.filename}`;
+    console.log(url);
+    console.log(token.length)
+    if(token.length > 11) {
+        console.log('mais 10')
+        const tokenDecode = jwt.decode(token);
+        const idUser = tokenDecode.idUser;
+    
+        await connection('uploads').insert({
+            idUser:idUser, 
+            name: req.file.originalname,
+            size: req.file.size, 
+            key: req.file.filename, 
+            url: url
+        });
+    }
+    else{
+        console.log('menos 10')
+        await connection('uploads').insert({
+            idUser:id, 
+            name: req.file.originalname,
+            size: req.file.size, 
+            key: req.file.filename, 
+            url: url
+        });
+    }
+
+    return res.status(200).send();
+});
+
+//EXCLUINDO IMAGEM
+routes.delete('/user/deleteImagens/:id', async (req, res) => {
+    const {id} = req.params;
+    var a = JSON.stringify(id);
+    const token = a.substring(1, a.length-1);
+    const tokenDecode = jwt.decode(token);
+    const idUser = tokenDecode.idUser;
+
+    const [picture] = await connection.select().from('uploads').where({idUser:idUser})
+    await connection('uploads').del().where({idUser:idUser})
+    promisify(fs.unlink)(path.resolve(__dirname, "..", "tmp", "uploads", picture.key))
+    return res.status(200).send();
+});
+
+//PEGANDO IMAGEM PROPRIA
+routes.get('/user/ownImagens/:id', async (req, res) => {
+    const {id} = req.params;
+    var a = JSON.stringify(id);
+    const token = a.substring(1, a.length-1);
+    const tokenDecode = jwt.decode(token);
+    const idUser = tokenDecode.idUser;
+
+    const [response] = await connection.select('url').from('uploads').where({idUser: idUser});
+    return res.json(response);
+});
+
+//PEGANDO IMAGEM LT
+routes.get('/lt/ownImagens/:id', async (req, res) => {
+    const {id} = req.params;
+    const [response] = await connection.select('url').from('uploads').where({idUser: id});
+    return res.json(response);
 });
 
 //ROTAS DO LOGIN

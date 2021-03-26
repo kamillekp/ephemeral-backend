@@ -2,7 +2,6 @@ const connection = require('../dataBase/dbConnection')
 const bcrypt = require('bcrypt');
 const crypto = require ('crypto');
 const jwt = require('jsonwebtoken');
-const SECRET = "ellimak";
 
 module.exports = {
     //SALVAR PROTETOR
@@ -10,7 +9,8 @@ module.exports = {
         try {
             //REQUISIÇÃO
             const {nomeUser, senha, email, dataNascimento,/* imagem,*/ ddd, numeroTel, nome, cidade, bairro, estado, complemento, atividade, opcaoTipoAnimal, opcaoSexo, ajudaEmergencia, opcaoAnimalEspecial, dividirDespesas} = req.body;
-            
+            console.log('entrou')
+
             //RETIRANDO '' DAS STRINGS
             var senha2 = JSON.stringify(senha);
             senha2 = senha2.substring(1, senha2.length-1);
@@ -25,7 +25,7 @@ module.exports = {
             await connection('user').insert({
                 idUser: id, nomeUser, senha:newSenha, email, dataNascimento, imagem:'', ddd, numeroTel, nome, cidade, bairro, estado, complemento, atividade, opcaoTipoAnimal, opcaoSexo, ajudaEmergencia, opcaoAnimalEspecial, dividirDespesas, tamAnimal:''
             })
-            return res.status(201).send('OK');
+            return res.status(201).json(id);
         }        
         catch (error) {
             return res.status(400).send(error)
