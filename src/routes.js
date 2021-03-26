@@ -64,16 +64,23 @@ routes.post('/user/imagens/:id', multer(multerConfig).single('file'), async (req
 
 //EXCLUINDO IMAGEM
 routes.delete('/user/deleteImagens/:id', async (req, res) => {
+    console.log('delete')
     const {id} = req.params;
     var a = JSON.stringify(id);
     const token = a.substring(1, a.length-1);
     const tokenDecode = jwt.decode(token);
     const idUser = tokenDecode.idUser;
 
-    const [picture] = await connection.select().from('uploads').where({idUser:idUser})
-    await connection('uploads').del().where({idUser:idUser})
-    promisify(fs.unlink)(path.resolve(__dirname, "..", "tmp", "uploads", picture.key))
-    return res.status(200).send();
+    const [picture] = await connection.select().from('uploads').where({idUser:idUser});
+    console.log('picture', picture)
+    if(picture) {
+        await connection('uploads').del().where({idUser:idUser})
+        promisify(fs.unlink)(path.resolve(__dirname, "..", "tmp", "uploads", picture.key))
+        return res.status(200).send();
+    }
+    else {
+        return res.json('erro');
+    }
 });
 
 //PEGANDO IMAGEM PROPRIA
