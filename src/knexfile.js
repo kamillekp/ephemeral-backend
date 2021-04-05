@@ -4,9 +4,9 @@ module.exports = {
     client: 'mysql2',
     connection: {
       host: 'sql10.freesqldatabase.com',
-      database: 'sql10402236',
-      user:     'sql10402236',
-      password: 'ZThvds59Ms',
+      database: 'sql10403521',
+      user:     'sql10403521',
+      password: 'EH5h3ggx81',
       port: 3306,
     },
     migrations: {
