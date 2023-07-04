@@ -1,6 +1,6 @@
 # Ephemeral - API
 
-API desenvolvida em Node.js como backend do trabalho de conclusão de Kamille Konarzewski
+API desenvolvida em Node.js como backend do trabalho de conclusão de Kamille Konarzewski. Uma plataforma para localização de lares temporários para animais abandonados.
 
 ## Iniciando localmente
 #### Backend
